@@ -57,7 +57,8 @@ body {
     place-items: center;
     font-family: Roboto, "Segoe UI", sans-serif;
     background:
-        radial-gradient(circle at top, rgba(103, 80, 164, 0.14), transparent 40%),
+        radial-gradient(circle at top, rgba(103, 80, 164, 0.2), transparent 38%),
+        radial-gradient(circle at bottom, rgba(103, 80, 164, 0.08), transparent 42%),
         var(--bg);
     color: var(--text);
     padding:
@@ -76,11 +77,24 @@ body {
     display: grid;
     grid-template-rows: auto auto 1fr auto;
     width: 100%;
-    background: var(--surface);
+    position: relative;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 28%),
+        var(--surface);
     border: 1px solid var(--border);
     border-radius: 32px;
     box-shadow: var(--shadow);
     overflow: hidden;
+}
+
+.calculator::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.35), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 20%);
 }
 
 .topbar {
@@ -104,7 +118,10 @@ body {
     cursor: pointer;
     color: var(--text);
     background: var(--surface-2);
-    transition: transform 0.16s ease, background 0.2s ease, color 0.2s ease;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 8px 18px rgba(103, 80, 164, 0.08);
+    transition: transform 0.16s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .icon-button {
@@ -125,6 +142,9 @@ body {
 .mode-button.active {
     background: var(--primary-container);
     color: var(--accent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 10px 24px rgba(103, 80, 164, 0.16);
 }
 
 .icon-button:active,
@@ -139,27 +159,26 @@ body {
     justify-content: flex-end;
     gap: 10px;
     min-height: 220px;
-    padding: 12px 20px 22px;
+    padding: 14px 20px 24px;
+    background:
+        linear-gradient(180deg, rgba(103, 80, 164, 0.08), transparent 65%);
 }
 
 .display-meta {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 12px;
     color: var(--text-muted);
     font-size: 0.92rem;
 }
 
 .angle-badge {
-    padding: 6px 10px;
+    padding: 7px 12px;
     border-radius: 999px;
     background: var(--surface-2);
+    border: 1px solid var(--border);
     font-weight: 600;
-}
-
-.history-label {
-    opacity: 0.85;
 }
 
 .expression,
@@ -192,7 +211,7 @@ body {
     max-height: 0;
     overflow: auto;
     border-top: 1px solid transparent;
-    background: var(--surface-2);
+    background: linear-gradient(180deg, rgba(103, 80, 164, 0.05), transparent), var(--surface-2);
     transition: max-height 0.24s ease, border-color 0.24s ease, padding 0.24s ease;
 }
 
@@ -255,11 +274,17 @@ body {
     cursor: pointer;
     font-size: clamp(1rem, 3.4vw, 1.4rem);
     font-weight: 600;
-    transition: transform 0.16s ease, filter 0.2s ease, background 0.2s ease;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 10px 20px rgba(40, 30, 70, 0.08);
+    transition: transform 0.16s ease, filter 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .key:hover {
-    filter: brightness(0.99);
+    filter: brightness(1.02);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.26),
+        0 12px 24px rgba(40, 30, 70, 0.11);
 }
 
 .key.number {
@@ -279,7 +304,7 @@ body {
 }
 
 .key.equal {
-    background: var(--primary);
+    background: linear-gradient(180deg, #7b61c9, var(--primary));
     color: #ffffff;
 }
 
@@ -293,13 +318,6 @@ body {
 
 .span-2 {
     grid-column: span 2;
-}
-
-.footer-note {
-    padding: 0 20px 18px;
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    text-align: center;
 }
 
 @media (max-width: 560px) {
@@ -321,10 +339,6 @@ body {
 
     .topbar {
         padding-top: max(18px, env(safe-area-inset-top));
-    }
-
-    .footer-note {
-        padding-bottom: max(18px, env(safe-area-inset-bottom));
     }
 }
 
@@ -360,7 +374,6 @@ body {
 
         <section class="display" aria-live="polite">
             <div class="display-meta">
-                <span class="history-label">Material style</span>
                 <span class="angle-badge">DEG</span>
             </div>
             <div id="expression" class="expression"></div>
@@ -420,8 +433,6 @@ body {
                 <button class="key equal success" type="button" data-action="equals">=</button>
             </div>
         </section>
-
-        <p class="footer-note">Modo científico con funciones directas y diseño adaptable para móvil y escritorio.</p>
     </section>
 </main>
 
