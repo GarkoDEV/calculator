@@ -2,10 +2,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>Calculadora Material You</title>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<title>Calculadora Premium V2</title>
 
 <style>
 
@@ -18,39 +23,67 @@
 
 :root{
 
-    --bg:#131314;
-    --surface:#1E1F20;
-    --surface2:#2A2B2F;
+    --bg:#F3F4F8;
+    --surface:#FFFFFF;
+    --surface2:#EEF0F6;
 
-    --text:#E3E3E3;
-    --text-secondary:#9AA0A6;
+    --text:#1C1B1F;
+    --text-secondary:#666;
+
+    --primary:#6750A4;
+    --secondary:#625B71;
 
     --operator:#8AB4F8;
     --equal:#81C995;
 
-    --shadow:0 8px 30px rgba(0,0,0,.35);
+    --shadow:
+        0 8px 24px rgba(0,0,0,.08);
 
-    --radius:28px;
+}
 
-    --font:Roboto,system-ui,sans-serif;
+body.dark{
+
+    --bg:#131314;
+
+    --surface:#1E1F20;
+
+    --surface2:#2A2B2F;
+
+    --text:#E3E3E3;
+
+    --text-secondary:#9AA0A6;
+
+    --primary:#D0BCFF;
+
+    --secondary:#CCC2DC;
+
+    --shadow:
+        0 12px 30px rgba(0,0,0,.35);
 
 }
 
 body{
 
-    min-height:100vh;
-
     background:var(--bg);
 
+    font-family:
+        Roboto,
+        system-ui,
+        sans-serif;
+
+    min-height:100vh;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
-    font-family:var(--font);
+    transition:.3s;
 
     padding:
         env(safe-area-inset-top)
-        12px
+        10px
         env(safe-area-inset-bottom);
 
 }
@@ -58,7 +91,8 @@ body{
 .calculadora{
 
     width:100%;
-    max-width:420px;
+
+    max-width:460px;
 
     background:var(--surface);
 
@@ -68,20 +102,102 @@ body{
 
     box-shadow:var(--shadow);
 
+    transition:.3s;
+
+}
+
+.barra-superior{
+
     display:flex;
-    flex-direction:column;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 18px;
+
+}
+
+.icon-btn{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--surface2);
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    font-size:1.2rem;
+
+    transition:.2s;
+
+}
+
+.icon-btn:active{
+
+    transform:scale(.95);
+
+}
+
+.titulo{
+
+    color:var(--primary);
+
+    font-size:1.1rem;
+
+    font-weight:700;
+
+}
+
+.historial{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    background:var(--surface2);
+
+    transition:.4s;
+
+}
+
+.historial.abierto{
+
+    max-height:200px;
+
+    overflow:auto;
+
+}
+
+.historial-item{
+
+    padding:12px 18px;
+
+    border-bottom:
+        1px solid rgba(0,0,0,.05);
+
+    color:var(--text);
 
 }
 
 .pantalla{
 
-    min-height:220px;
+    padding:20px 24px;
+
+    min-height:180px;
 
     display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
 
-    padding:40px 24px 20px;
+    flex-direction:column;
+
+    justify-content:flex-end;
 
 }
 
@@ -89,15 +205,11 @@ body{
 
     color:var(--text-secondary);
 
-    font-size:1.2rem;
-
     text-align:right;
 
-    min-height:30px;
+    min-height:28px;
 
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+    font-size:1rem;
 
 }
 
@@ -105,11 +217,11 @@ body{
 
     color:var(--text);
 
+    text-align:right;
+
     font-size:4rem;
 
     font-weight:300;
-
-    text-align:right;
 
     overflow-x:auto;
 
@@ -118,34 +230,38 @@ body{
 }
 
 .valor-actual::-webkit-scrollbar{
+
     display:none;
+
 }
 
 .botones{
 
-    padding:20px;
-
     display:grid;
 
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:
+        repeat(4,1fr);
 
-    gap:14px;
+    gap:12px;
+
+    padding:18px;
+
+}
+
+.botones.cientifica{
+
+    grid-template-columns:
+        repeat(5,1fr);
 
 }
 
 button{
 
-    height:72px;
-
     border:none;
 
-    border-radius:24px;
+    height:68px;
 
-    font-size:1.6rem;
-
-    font-weight:500;
-
-    color:var(--text);
+    border-radius:22px;
 
     cursor:pointer;
 
@@ -153,9 +269,11 @@ button{
 
     overflow:hidden;
 
-    transition:
-        transform .15s,
-        opacity .2s;
+    font-size:1.3rem;
+
+    font-weight:600;
+
+    transition:.15s;
 
 }
 
@@ -165,47 +283,11 @@ button:active{
 
 }
 
-button::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:120px;
-    height:120px;
-
-    background:rgba(255,255,255,.15);
-
-    border-radius:50%;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%) scale(0);
-
-    opacity:0;
-
-}
-
-button:active::after{
-
-    transform:translate(-50%,-50%) scale(2);
-
-    opacity:1;
-
-    transition:.35s;
-
-}
-
 .numero{
 
     background:var(--surface2);
 
-}
-
-.especial{
-
-    background:#3A3B3F;
+    color:var(--text);
 
 }
 
@@ -225,17 +307,38 @@ button:active::after{
 
 }
 
+.especial{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.cientifico{
+
+    display:none;
+
+}
+
+.botones.cientifica .cientifico{
+
+    display:block;
+
+}
+
 .cero{
 
     grid-column:span 2;
 
 }
 
-@media(max-width:480px){
+@media(max-width:500px){
 
     body{
+
         padding:0;
-        background:var(--surface);
+
     }
 
     .calculadora{
@@ -260,41 +363,336 @@ button:active::after{
 
 <div class="calculadora">
 
-    <div class="pantalla">
+<div class="barra-superior">
 
-        <div id="previo" class="valor-previo"></div>
+<button
+    id="themeBtn"
+    class="icon-btn"
+>
+🌙
+</button>
 
-        <div id="actual" class="valor-actual">0</div>
+<div class="titulo">
+Calculadora Premium V2
+</div>
 
-    </div>
+<button
+    id="historyBtn"
+    class="icon-btn"
+>
+🕘
+</button>
 
-    <div class="botones">
+</div>
 
-        <button class="especial" onclick="calc.limpiar()">AC</button>
-        <button class="especial" onclick="calc.cambiarSigno()">±</button>
-        <button class="especial" onclick="calc.porcentaje()">%</button>
-        <button class="operador" onclick="calc.operacion('/')">÷</button>
+<div
+    id="historial"
+    class="historial"
+></div>
 
-        <button class="numero" onclick="calc.numero('7')">7</button>
-        <button class="numero" onclick="calc.numero('8')">8</button>
-        <button class="numero" onclick="calc.numero('9')">9</button>
-        <button class="operador" onclick="calc.operacion('*')">×</button>
+<div class="pantalla">
 
-        <button class="numero" onclick="calc.numero('4')">4</button>
-        <button class="numero" onclick="calc.numero('5')">5</button>
-        <button class="numero" onclick="calc.numero('6')">6</button>
-        <button class="operador" onclick="calc.operacion('-')">−</button>
+<div
+    id="previo"
+    class="valor-previo"
+></div>
 
-        <button class="numero" onclick="calc.numero('1')">1</button>
-        <button class="numero" onclick="calc.numero('2')">2</button>
-        <button class="numero" onclick="calc.numero('3')">3</button>
-        <button class="operador" onclick="calc.operacion('+')">+</button>
+<div
+    id="actual"
+    class="valor-actual"
+>
+0
+</div>
 
-        <button class="numero cero" onclick="calc.numero('0')">0</button>
-        <button class="numero" onclick="calc.numero('.')">.</button>
-        <button class="igual" onclick="calc.calcular()">=</button>
+</div>
 
-    </div>
+<div
+    id="botones"
+    class="botones"
+>
+
+<button
+class="especial"
+id="scienceBtn"
+>
+ƒx
+</button>
+
+<button
+class="especial"
+onclick="calc.limpiar()"
+>
+AC
+</button>
+
+<button
+class="especial"
+onclick="calc.cambiarSigno()"
+>
+±
+</button>
+
+<button
+class="operador"
+onclick="calc.operacion('/')"
+>
+÷
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('sin')"
+>
+sin
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('cos')"
+>
+cos
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('tan')"
+>
+tan
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('sqrt')"
+>
+√
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('pow2')"
+>
+x²
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('7')"
+>
+7
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('8')"
+>
+8
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('9')"
+>
+9
+</button>
+
+<button
+class="operador"
+onclick="calc.operacion('*')"
+>
+×
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('log')"
+>
+log
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('ln')"
+>
+ln
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.numero('(')"
+>
+(
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.numero(')')"
+>
+)
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.numero(Math.PI)"
+>
+π
+</button>
+```
+```html
+<button
+class="cientifico numero"
+onclick="calc.numero(Math.E)"
+>
+e
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('4')"
+>
+4
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('5')"
+>
+5
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('6')"
+>
+6
+</button>
+
+<button
+class="operador"
+onclick="calc.operacion('-')"
+>
+−
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('factorial')"
+>
+x!
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('inv')"
+>
+1/x
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('percent')"
+>
+%
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('pow')"
+>
+xʸ
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('exp')"
+>
+EXP
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('1')"
+>
+1
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('2')"
+>
+2
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('3')"
+>
+3
+</button>
+
+<button
+class="operador"
+onclick="calc.operacion('+')"
+>
++
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('asin')"
+>
+asin
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('acos')"
+>
+acos
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('atan')"
+>
+atan
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.numero(',')"
+>
+,
+</button>
+
+<button
+class="cientifico numero"
+onclick="calc.funcion('abs')"
+>
+|x|
+</button>
+
+<button
+class="numero cero"
+onclick="calc.numero('0')"
+>
+0
+</button>
+
+<button
+class="numero"
+onclick="calc.numero('.')"
+>
+.
+</button>
+
+<button
+class="igual"
+onclick="calc.calcular()"
+>
+=
+</button>
+
+</div>
 
 </div>
 
@@ -304,8 +702,16 @@ class Calculadora{
 
     constructor(){
 
-        this.actual=document.getElementById("actual");
-        this.previo=document.getElementById("previo");
+        this.actualEl=
+            document.getElementById("actual");
+
+        this.previoEl=
+            document.getElementById("previo");
+
+        this.historialEl=
+            document.getElementById("historial");
+
+        this.historial=[];
 
         this.limpiar();
 
@@ -315,7 +721,7 @@ class Calculadora{
 
         if(navigator.vibrate){
 
-            navigator.vibrate(10);
+            navigator.vibrate(8);
 
         }
 
@@ -324,7 +730,9 @@ class Calculadora{
     limpiar(){
 
         this.valorActual="0";
+
         this.valorPrevio="";
+
         this.operador=null;
 
         this.actualizar();
@@ -335,13 +743,23 @@ class Calculadora{
 
         this.vibrar();
 
-        if(n==="." && this.valorActual.includes(".")) return;
+        n=n.toString();
 
-        if(this.valorActual==="0" && n!=="."){
+        if(n==="."
+        && this.valorActual.includes(".")){
+
+            return;
+
+        }
+
+        if(this.valorActual==="0"
+        && n!=="."){
 
             this.valorActual=n;
 
-        }else{
+        }
+
+        else{
 
             this.valorActual+=n;
 
@@ -355,7 +773,11 @@ class Calculadora{
 
         this.vibrar();
 
-        if(this.valorActual==="") return;
+        if(this.valorActual===""){
+
+            return;
+
+        }
 
         if(this.valorPrevio!==""){
 
@@ -364,13 +786,164 @@ class Calculadora{
         }
 
         this.operador=op;
-        this.valorPrevio=this.valorActual;
+
+        this.valorPrevio=
+            this.valorActual;
+
         this.valorActual="";
 
         this.actualizar();
 
     }
 
+    factorial(n){
+
+        if(n<0) return NaN;
+
+        if(n===0) return 1;
+
+        let r=1;
+
+        for(let i=1;i<=n;i++){
+
+            r*=i;
+
+        }
+
+        return r;
+
+    }
+
+    funcion(tipo){
+
+        this.vibrar();
+
+        let n=
+            parseFloat(this.valorActual);
+
+        if(isNaN(n)){
+
+            return;
+
+        }
+
+        switch(tipo){
+
+            case "sin":
+
+                n=Math.sin(
+                    n*Math.PI/180
+                );
+
+                break;
+
+            case "cos":
+
+                n=Math.cos(
+                    n*Math.PI/180
+                );
+
+                break;
+
+            case "tan":
+
+                n=Math.tan(
+                    n*Math.PI/180
+                );
+
+                break;
+
+            case "asin":
+
+                n=Math.asin(n)
+                    *180/Math.PI;
+
+                break;
+
+            case "acos":
+
+                n=Math.acos(n)
+                    *180/Math.PI;
+
+                break;
+
+            case "atan":
+
+                n=Math.atan(n)
+                    *180/Math.PI;
+
+                break;
+
+            case "sqrt":
+
+                n=Math.sqrt(n);
+
+                break;
+
+            case "pow2":
+
+                n=Math.pow(n,2);
+
+                break;
+
+            case "log":
+
+                n=Math.log10(n);
+
+                break;
+
+            case "ln":
+
+                n=Math.log(n);
+
+                break;
+
+            case "inv":
+
+                n=1/n;
+
+                break;
+
+            case "factorial":
+
+                n=this.factorial(n);
+
+                break;
+
+            case "abs":
+
+                n=Math.abs(n);
+
+                break;
+
+            case "percent":
+
+                n=n/100;
+
+                break;
+
+            case "exp":
+
+                n=Math.exp(n);
+
+                break;
+
+            case "pow":
+
+                this.operacion("^");
+
+                return;
+
+        }
+
+        this.valorActual=
+            n.toString();
+
+        this.actualizar();
+
+    }
+```
+```html
     calcular(){
 
         this.vibrar();
@@ -378,7 +951,12 @@ class Calculadora{
         const a=parseFloat(this.valorPrevio);
         const b=parseFloat(this.valorActual);
 
-        if(isNaN(a)||isNaN(b)) return;
+        if(
+            isNaN(a) ||
+            isNaN(b)
+        ){
+            return;
+        }
 
         let r=0;
 
@@ -404,7 +982,9 @@ class Calculadora{
                 if(b===0){
 
                     this.valorActual="Error";
+
                     this.valorPrevio="";
+
                     this.operador=null;
 
                     this.actualizar();
@@ -414,11 +994,42 @@ class Calculadora{
                 }
 
                 r=a/b;
+                break;
+
+            case "^":
+
+                r=Math.pow(a,b);
+                break;
+
+            default:
+
+                return;
 
         }
 
-        this.valorActual=r.toString();
+        const operacionTexto=
+            `${this.formatear(this.valorPrevio)}
+            ${this.simbolo(this.operador)}
+            ${this.formatear(this.valorActual)}
+            = ${this.formatear(r.toString())}`;
+
+        this.historial.unshift(
+            operacionTexto
+        );
+
+        if(this.historial.length>20){
+
+            this.historial.pop();
+
+        }
+
+        this.renderHistorial();
+
+        this.valorActual=
+            r.toString();
+
         this.valorPrevio="";
+
         this.operador=null;
 
         this.actualizar();
@@ -429,17 +1040,13 @@ class Calculadora{
 
         this.vibrar();
 
-        this.valorActual=(parseFloat(this.valorActual)*-1).toString();
+        const n=
+            parseFloat(this.valorActual);
 
-        this.actualizar();
+        if(isNaN(n)) return;
 
-    }
-
-    porcentaje(){
-
-        this.vibrar();
-
-        this.valorActual=(parseFloat(this.valorActual)/100).toString();
+        this.valorActual=
+            (n*-1).toString();
 
         this.actualizar();
 
@@ -452,7 +1059,8 @@ class Calculadora{
             "+":"+",
             "-":"−",
             "*":"×",
-            "/":"÷"
+            "/":"÷",
+            "^":"^"
 
         }[op];
 
@@ -464,13 +1072,22 @@ class Calculadora{
 
         if(n==="Error") return "Error";
 
-        let partes=n.toString().split(".");
+        const partes=
+            n.toString().split(".");
 
-        let entero=parseFloat(partes[0]);
+        let entero=
+            Number(partes[0]);
 
-        if(isNaN(entero)) return n;
+        if(isNaN(entero)){
 
-        entero=entero.toLocaleString("es-ES");
+            return n;
+
+        }
+
+        entero=
+            entero.toLocaleString(
+                "es-ES"
+            );
 
         return partes[1]
             ? entero+"."+partes[1]
@@ -478,37 +1095,75 @@ class Calculadora{
 
     }
 
+    renderHistorial(){
+
+        this.historialEl.innerHTML=
+            this.historial
+            .map(item=>
+
+                `<div class="historial-item">
+                    ${item}
+                </div>`
+
+            )
+            .join("");
+
+    }
+
     actualizar(){
 
-        let longitud=this.valorActual.length;
+        const l=
+            this.valorActual.length;
 
-        if(longitud>12){
+        if(l>12){
 
-            this.actual.style.fontSize="2rem";
-
-        }else if(longitud>8){
-
-            this.actual.style.fontSize="3rem";
-
-        }else{
-
-            this.actual.style.fontSize="4rem";
+            this.actualEl
+            .style.fontSize=
+            "2rem";
 
         }
 
-        this.actual.innerText=this.formatear(this.valorActual);
+        else if(l>8){
+
+            this.actualEl
+            .style.fontSize=
+            "3rem";
+
+        }
+
+        else{
+
+            this.actualEl
+            .style.fontSize=
+            "4rem";
+
+        }
+
+        this.actualEl.innerText=
+
+            this.formatear(
+                this.valorActual
+            );
 
         if(this.operador){
 
-            this.previo.innerText=
+            this.previoEl.innerText=
 
-                this.formatear(this.valorPrevio)
-                +" "
-                +this.simbolo(this.operador);
+                this.formatear(
+                    this.valorPrevio
+                )
 
-        }else{
+                +" "+
 
-            this.previo.innerText="";
+                this.simbolo(
+                    this.operador
+                );
+
+        }
+
+        else{
+
+            this.previoEl.innerText="";
 
         }
 
@@ -516,36 +1171,170 @@ class Calculadora{
 
 }
 
-const calc=new Calculadora();
+const calc=
+    new Calculadora();
 
-document.addEventListener("keydown",(e)=>{
+const body=
+    document.body;
 
-    if("0123456789".includes(e.key))
-        calc.numero(e.key);
+const themeBtn=
+    document.getElementById(
+        "themeBtn"
+    );
 
-    if(e.key===".")
-        calc.numero(".");
+if(
 
-    if(["+","-","*","/"].includes(e.key))
-        calc.operacion(e.key);
+    localStorage.getItem(
+        "theme"
+    )==="dark"
 
-    if(e.key==="Enter")
-        calc.calcular();
+){
 
-    if(e.key==="Escape")
-        calc.limpiar();
+    body.classList.add(
+        "dark"
+    );
 
-    if(e.key==="Backspace"){
+    themeBtn.innerText="☀️";
 
-        calc.valorActual=
+}
 
-            calc.valorActual.slice(0,-1)||"0";
+themeBtn.onclick=()=>{
 
-        calc.actualizar();
+    body.classList.toggle(
+        "dark"
+    );
+
+    const dark=
+
+        body.classList.contains(
+            "dark"
+        );
+
+    themeBtn.innerText=
+
+        dark
+        ? "☀️"
+        : "🌙";
+
+    localStorage.setItem(
+
+        "theme",
+
+        dark
+        ? "dark"
+        : "light"
+
+    );
+
+};
+
+document
+.getElementById(
+    "scienceBtn"
+)
+.onclick=()=>{
+
+    document
+    .getElementById(
+        "botones"
+    )
+    .classList
+    .toggle(
+        "cientifica"
+    );
+
+};
+
+document
+.getElementById(
+    "historyBtn"
+)
+.onclick=()=>{
+
+    document
+    .getElementById(
+        "historial"
+    )
+    .classList
+    .toggle(
+        "abierto"
+    );
+
+};
+
+document
+.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            "0123456789"
+            .includes(e.key)
+        ){
+
+            calc.numero(
+                e.key
+            );
+
+        }
+
+        if(e.key==="."){
+
+            calc.numero(
+                "."
+            );
+
+        }
+
+        if(
+
+            ["+","-","*","/"]
+            .includes(e.key)
+
+        ){
+
+            calc.operacion(
+                e.key
+            );
+
+        }
+
+        if(
+            e.key==="Enter"
+        ){
+
+            calc.calcular();
+
+        }
+
+        if(
+            e.key==="Escape"
+        ){
+
+            calc.limpiar();
+
+        }
+
+        if(
+            e.key==="Backspace"
+        ){
+
+            calc.valorActual=
+
+                calc.valorActual
+                .slice(0,-1)
+
+                ||
+
+                "0";
+
+            calc.actualizar();
+
+        }
 
     }
 
-});
+);
 
 </script>
 
